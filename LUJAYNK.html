@@ -41,7 +41,7 @@
 </head>
 
 <body>
-
+    <h1>Segundo desafio (2)</h1>
     <div class="auth">
         <p>Insira o token para acessar:</p>
         <input type="text" id="tokenInput">
@@ -52,7 +52,7 @@
     <div class="puzzle">
         <h1>Desafio de Anagrama</h1>
         Desembaralhe as letras para formar três palavras relacionadas:<br><br>
-        A dica para a próxima pista é o próprio anagrama<br><br>
+        <br>
         <span id="anagram">idestoá éman cranghari</span><br><br>
         <input type="text" id="guess" placeholder="Suas respostas separadas por espaços">
         <button onclick="checkAnagram()">Verificar</button>
@@ -66,12 +66,9 @@
             const correctAnswers = ['estádio mané garrincha', 'estadio mane garrincha', 'estádio mane garrincha', 'estadio mané garrincha', 'estádio mané garrincha'];
 
             if (correctAnswers.includes(answer.trim().toLowerCase())) {
-                document.getElementById('result').textContent = `Correto! Você desembaralhou as palavras.
-
-                Dica! Zaquel assitindo Jogo de futebol
-
-                Próximo Token é: 919203
-                `
+                document.getElementById('result').innerHTML = `Correto! Você desembaralhou as palavras.<br><br>
+            Dica: <strong>Zaquel assistindo Jogo de futebol</strong><br><br>
+            Próximo Token é: <strong>919203</strong>`;
             } else {
                 document.getElementById('result').textContent = 'Tente novamente.';
             }
