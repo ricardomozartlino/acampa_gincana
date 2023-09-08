@@ -28,15 +28,43 @@
             border-bottom: 2px solid black;
             margin: 0 5px;
         }
+
+        .content2 {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
 
 <body>
 
-    <div class="content">
-        <p>“Porque a <span class="blank"></span> <span class="blank"></span> <span class="blank"></span> é loucura para
-            os que perecem; mas para nós, que somos salvos, é o poder de Deus.”</p>
+    <div class="content2">
+        <p>“Porque a
+            <input type="text" class="blank" id="word1">
+            <input type="text" class="blank" id="word2">
+            <input type="text" class="blank" id="word3">
+            é loucura para os que perecem; mas para nós, que somos salvos, é o poder de Deus.”
+        </p>
+        <button onclick="checkAnswer()">Verificar Resposta</button>
+        <p id="result"></p>
     </div>
+
+    <script>
+        function checkAnswer() {
+            const word1 = document.getElementById('word1').value;
+            const word2 = document.getElementById('word2').value;
+            const word3 = document.getElementById('word3').value;
+
+            if ((word1.toUpperCase() === "Palavra".toUpperCase() && word2.toUpperCase() === "da".toUpperCase() && word3.toUpperCase() === "Cruz".toUpperCase()) || (word1.toUpperCase() === "Pregação".toUpperCase() && word2.toUpperCase() === "da".toUpperCase() && word3.toUpperCase() === "Cruz".toUpperCase())) {
+                const token = Math.floor(10000 + Math.random() * 90000); // Gerar um número entre 10000 e 99999
+                document.getElementById('result').textContent = "Correto! Seu token é: " + token;
+            } else {
+                document.getElementById('result').textContent = "Tente novamente.";
+            }
+        }
+    </script>
 
 </body>
 
