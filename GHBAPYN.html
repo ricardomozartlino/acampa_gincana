@@ -14,7 +14,8 @@
             background-color: #f5f5f5;
         }
 
-        .puzzle, .auth {
+        .puzzle,
+        .auth {
             background: #fff;
             padding: 20px;
             border-radius: 8px;
@@ -36,7 +37,6 @@
             padding: 5px 10px;
             margin-top: 10px;
         }
-
     </style>
 </head>
 
@@ -52,6 +52,7 @@
     <div class="puzzle">
         <h1>Desafio de Anagrama</h1>
         Desembaralhe as letras para formar três palavras relacionadas:<br><br>
+        A dica para a próxima pista é o próprio anagrama<br><br>
         <span id="anagram">idestoá éman cranghari</span><br><br>
         <input type="text" id="guess" placeholder="Suas respostas separadas por espaços">
         <button onclick="checkAnagram()">Verificar</button>
@@ -65,8 +66,13 @@
             const correctAnswers = ['estádio mané garrincha', 'estadio mane garrincha', 'estádio mane garrincha', 'estadio mané garrincha', 'estádio mané garrincha'];
 
             if (correctAnswers.includes(answer.trim().toLowerCase())) {
-                document.getElementById('result').textContent = 'Correto! Você desembaralhou as palavras.';
-                document.getElementById('result2').textContent = 'Dica! Futebol';
+                document.getElementById('result').textContent = `Correto! Você desembaralhou as palavras.
+                <br>
+                Dica! Futebol
+
+                <br>
+                Próximo Token é: <strong>919203</strong>
+                `
             } else {
                 document.getElementById('result').textContent = 'Tente novamente.';
             }
@@ -77,7 +83,7 @@
         function validateToken() {
             const userInput = document.getElementById('tokenInput').value;
 
-            if (userInput === TOKEN) {
+            if (userInput.toUpperCase() === TOKEN.toUpperCase()) {
                 document.querySelector('.auth').style.display = 'none';
                 document.querySelector('.puzzle').style.display = 'block';
             } else {
