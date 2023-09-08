@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Desafio de Anagrama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        .puzzle {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        input[type="text"] {
+            font-size: 20px;
+            padding: 5px;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Desafio de Anagrama</h1>
+    <div class="puzzle">
+        Desembaralhe as letras para formar três palavras relacionadas:<br><br>
+        <span id="anagram">idestoá éman cranghari</span><br><br>
+        <input type="text" id="guess" placeholder="Suas respostas separadas por espaços">
+        <button onclick="checkAnagram()">Verificar</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function checkAnagram() {
+            const answer = document.getElementById('guess').value.toLowerCase();
+            const correctAnswers = ['estádio mané garrincha', 'estadio mane garrincha', 'estádio mane garrincha', 'estadio mané garrincha', 'estádio mané garrincha'];
+
+            if (correctAnswers.includes(answer.trim().toLowerCase())) {
+                document.getElementById('result').textContent = 'Correto! Você desembaralhou as palavras.';
+            } else {
+                document.getElementById('result').textContent = 'Tente novamente.';
+            }
+        }
+    </script>
+</body>
+
+</html>
