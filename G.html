@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Cobrinha</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .content,
+        .auth {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .content {
+            display: none;
+        }
+
+        #gameCanvas {
+            background-color: #eee;
+            border: 1px solid #000;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth">
+        <p>Insira o token para acessar:</p>
+        <input type="text" id="tokenInput">
+        <button onclick="validateToken()">Acessar</button>
+        <p id="authResult"></p>
+    </div>
+
+    <div class="content">
+        <canvas id="gameCanvas" width="320" height="320"></canvas>
+
+        <button onclick="startGame()">Reiniciar Jogo</button>
+
+        <p id="score">Pontuação: 0</p>
+    </div>
+
+    <script>
+        const TOKEN = "33447";
+        let score = 0;
+
+        function validateToken() {
+            const userInput = document.getElementById('tokenInput').value;
+
+            if (userInput === TOKEN) {
+                document.querySelector('.auth').style.display = 'none';
+                document.querySelector('.content').style.display = 'block';
+                startGame();
+            } else {
+                document.getElementById('authResult').textContent = "Token inválido. Tente novamente.";
+            }
+        }
+
+        function startGame() {
+            const canvas = document.getElementById("gameCanvas");
+            const context = canvas.getContext("2d");
+            const box = 20;
+            let score = 0;
+            let snake = [];
+            snake[0] = { x: 10 * box, y: 10 * box };
+            let food = {
+                x: Math.floor(Math.random() * 15 + 1) * box,
+                y: Math.floor(Math.random() * 15 + 1) * box
+            };
+            let d;
+
+            document.addEventListener("keydown", direction);
+
+            function direction(event) {
+                if (event.keyCode === 37 && d !== "RIGHT") {
+                    d = "LEFT";
+                } else if (event.keyCode === 38 && d !== "DOWN") {
+                    d = "UP";
+                } else if (event.keyCode === 39 && d !== "LEFT") {
+                    d = "RIGHT";
+                } else if (event.keyCode === 40 && d !== "UP") {
+                    d = "DOWN";
+                }
+            }
+
+            function draw() {
+                context.clearRect(0, 0, canvas.width, canvas.height);
+
+                for (let i = 0; i < snake.length; i++) {
+                    context.fillStyle = (i === 0) ? "green" : "white";
+                    context.fillRect(snake[i].x, snake[i].y, box, box);
+                    context.strokeStyle = "red";
+                    context.strokeRect(snake[i].x, snake[i].y, box, box);
+                }
+
+                context.fillStyle = "red";
+                context.fillRect(food.x, food.y, box, box);
+
+                let snakeX = snake[0].x;
+                let snakeY = snake[0].y;
+
+                if (d === "LEFT") snakeX -= box;
+                if (d === "UP") snakeY -= box;
+                if (d === "RIGHT") snakeX += box;
+                if (d === "DOWN") snakeY += box;
+
+                if (snakeX === food.x && snakeY === food.y) {
+                    score++;
+                    document.getElementById('score').textContent = "Pontuação: " + score;
+                    if (score === 10) {
+                        alert("Parabéns! Seu token é: 44558");
+                        clearInterval(game);
+                        return;
+                    }
+                    food = {
+                        x: Math.floor(Math.random() * 15 + 1) * box,
+                        y: Math.floor(Math.random() * 15 + 1) * box
+                    }
+                } else {
+                    snake.pop();
+                }
+
+                // Verifica colisão com as paredes
+                if (snakeX < 0 || snakeY < 0 || snakeX > (canvas.width - box) || snakeY > (canvas.height - box)) {
+                    alert("Você perdeu! Tente novamente.");
+                    clearInterval(game);
+                    return;
+                }
+
+                let newHead = {
+                    x: snakeX,
+                    y: snakeY
+                }
+
+                snake.unshift(newHead);
+            }
+
+            function restartGame() {
+                snake = [];
+                snake[0] = {
+                    x: 9 * box,
+                    y: 10 * box
+                };
+                food = {
+                    x: Math.floor(Math.random() * 15) * box,
+                    y: Math.floor(Math.random() * 15) * box
+                };
+                d = null;
+                score = 0;
+                document.getElementById('score').textContent = "Pontuação: " + score;
+                clearInterval(game);
+                game = setInterval(draw, 100);
+            }
+
+            let game = setInterval(draw, 200);
+        }
+    </script>
+
+</body>
+
+</html>

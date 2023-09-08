@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo da Memória</title>
+    <style>
+        .board {
+            display: grid;
+            grid-template-columns: repeat(4, 100px);
+            gap: 10px;
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background: gray;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .revealed, .matched {
+            background: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="board" id="memory-board"></div>
+    <p id="message"></p>
+
+    <script>
+        const cardsData = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D'];
+        const board = document.getElementById('memory-board');
+        const message = document.getElementById('message');
+        let revealedCards = [];
+        let matchedPairs = 0;
+
+        function shuffle(array) {
+            array.sort(() => Math.random() - 0.5);
+        }
+
+        function checkMatch() {
+            if (revealedCards.length === 2) {
+                if (revealedCards[0].innerText === revealedCards[1].innerText) {
+                    revealedCards.forEach(card => card.classList.add('matched'));
+                    matchedPairs++;
+                    if (matchedPairs === 4) {
+                        message.textContent = "Você ganhou! A pista é: ESTRELA.";
+                    }
+                } else {
+                    setTimeout(() => {
+                        revealedCards.forEach(card => card.classList.remove('revealed'));
+                    }, 1000);
+                }
+                revealedCards = [];
+            }
+        }
+
+        function revealCard(event) {
+            if (revealedCards.length < 2 && !event.target.classList.contains('revealed') && !event.target.classList.contains('matched')) {
+                event.target.classList.add('revealed');
+                revealedCards.push(event.target);
+                checkMatch();
+            }
+        }
+
+        function setupGame() {
+            shuffle(cardsData);
+            cardsData.forEach(data => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = data;
+                card.addEventListener('click', revealCard);
+                board.appendChild(card);
+            });
+        }
+
+        setupGame();
+    </script>
+</body>
+</html>
