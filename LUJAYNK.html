@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Desafio de Anagrama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .puzzle,
+        .auth {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .puzzle {
+            display: none;
+        }
+
+        input[type="text"] {
+            font-size: 20px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth">
+        <p>Insira o token para acessar:</p>
+        <input type="text" id="tokenInput">
+        <button onclick="validateToken()">Acessar</button>
+        <p id="authResult"></p>
+    </div>
+
+    <div class="puzzle">
+        <h1>Desafio de Anagrama</h1>
+        Desembaralhe as letras para formar três palavras relacionadas:<br><br>
+        A dica para a próxima pista é o próprio anagrama<br><br>
+        <span id="anagram">idestoá éman cranghari</span><br><br>
+        <input type="text" id="guess" placeholder="Suas respostas separadas por espaços">
+        <button onclick="checkAnagram()">Verificar</button>
+        <p id="result"></p>
+        <p id="result2"></p>
+    </div>
+
+    <script>
+        function checkAnagram() {
+            const answer = document.getElementById('guess').value.toLowerCase();
+            const correctAnswers = ['estádio mané garrincha', 'estadio mane garrincha', 'estádio mane garrincha', 'estadio mané garrincha', 'estádio mané garrincha'];
+
+            if (correctAnswers.includes(answer.trim().toLowerCase())) {
+                document.getElementById('result').textContent = `Correto! Você desembaralhou as palavras.
+
+                Dica! Zaquel assitindo Jogo de futebol
+
+                Próximo Token é: 919203
+                `
+            } else {
+                document.getElementById('result').textContent = 'Tente novamente.';
+            }
+        }
+
+        const TOKEN = "44558";
+
+        function validateToken() {
+            const userInput = document.getElementById('tokenInput').value;
+
+            if (userInput.toUpperCase() === TOKEN.toUpperCase()) {
+                document.querySelector('.auth').style.display = 'none';
+                document.querySelector('.puzzle').style.display = 'block';
+            } else {
+                document.getElementById('authResult').textContent = "Token inválido. Tente novamente.";
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>

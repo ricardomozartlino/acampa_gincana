@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jogo do Número Mágico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+        .game,
+        .auth {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .game {
+            display: none;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            font-size: 20px;
+            padding: 5px;
+            margin: 5px 0;
+        }
+
+        button {
+            font-size: 20px;
+            padding: 5px 10px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="auth">
+        <p>Insira o token para acessar:</p>
+        <input type="text" id="tokenInput">
+        <button onclick="validateToken()">Acessar</button>
+        <p id="authResult"></p>
+    </div>
+
+    <div class="game">
+        <h2>Jogo do Número Mágico</h2>
+        <p>Tente adivinhar o número entre 0 e 1.000.000:</p>
+        <input type="number" id="userGuess" min="0" max="1000000">
+        <button onclick="checkGuess()">Adivinhar</button>
+        <p id="hint"></p>
+    </div>
+
+    <script>
+        let secretNumber = Math.floor(Math.random() * 1000001);
+        let attempts = 0;
+
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("userGuess").value);
+            attempts++;
+
+            if (userGuess === secretNumber) {
+                document.getElementById("hint").innerHTML = `Parabéns! Você acertou em ${attempts} tentativas!
+                sua nova pista é: Cruz, seu novo token é: 364726
+                `;
+
+            } else if (userGuess < secretNumber) {
+                document.getElementById("hint").innerText = "O número é maior! Tente novamente.";
+            } else {
+                document.getElementById("hint").innerText = "O número é menor! Tente novamente.";
+            }
+        }
+
+        const TOKEN = "919203";
+
+        function validateToken() {
+            const userInput = document.getElementById('tokenInput').value;
+
+            if (userInput === TOKEN) {
+                document.querySelector('.auth').style.display = 'none';
+                document.querySelector('.game').style.display = 'block';
+            } else {
+                document.getElementById('authResult').textContent = "Token inválido. Tente novamente.";
+            }
+        }
+    </script>
+
+</body>
+
+</html>

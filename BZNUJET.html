@@ -48,7 +48,7 @@
 </head>
 
 <body>
-
+    <h1>Primeiro desafio(1)<h1>
     <div class="auth">
         <p>Insira o token para acessar:</p>
         <input type="text" id="tokenInput">
@@ -57,6 +57,7 @@
     </div>
 
     <div class="content">
+        
 
         <table>
             <tr>
@@ -90,7 +91,7 @@
             <tr>
                 <td>H</td>
                 <td>T</td>
-                <td>P</td>
+                <td>X</td>
                 <td>O</td>
                 <td>W</td>
                 <td>L</td>
@@ -105,12 +106,12 @@
                 <td>I</td>
                 <td>A</td>
                 <td>G</td>
-                <td>E</td>
-                <td>P</td>
-                <td>E</td>
-                <td>V</td>
+                <td>K</td>
                 <td>S</td>
-                <td>U</td>
+                <td>A</td>
+                <td>L</td>
+                <td>V</td>
+                <td>A</td>
                 <td>X</td>
                 <td>W</td>
                 <td>F</td>
@@ -120,7 +121,7 @@
                 <td>L</td>
                 <td>R</td>
                 <td>J</td>
-                <td>D</td>
+                <td>Y</td>
                 <td>T</td>
                 <td>D</td>
                 <td>A</td>
@@ -136,7 +137,7 @@
                 <td>K</td>
                 <td>U</td>
                 <td>A</td>
-                <td>I</td>
+                <td>H</td>
                 <td>B</td>
                 <td>H</td>
                 <td>Y</td>
@@ -155,12 +156,12 @@
                 <td>R</td>
                 <td>W</td>
                 <td>P</td>
-                <td>O</td>
+                <td>V</td>
             </tr>
             <tr>
                 <td>U</td>
                 <td>G</td>
-                <td>H</td>
+                <td>B</td>
                 <td>A</td>
                 <td>B</td>
                 <td>V</td>
@@ -168,49 +169,49 @@
                 <td>I</td>
                 <td>J</td>
                 <td>T</td>
-                <td>S</td>
+                <td>I</td>
                 <td>L</td>
             </tr>
             <tr>
                 <td>Q</td>
                 <td>N</td>
-                <td>J</td>
+                <td>O</td>
                 <td>M</td>
                 <td>O</td>
                 <td>A</td>
                 <td>H</td>
                 <td>F</td>
                 <td>N</td>
-                <td>R</td>
+                <td>D</td>
                 <td>K</td>
                 <td>P</td>
             </tr>
             <tr>
                 <td>A</td>
                 <td>X</td>
-                <td>Y</td>
+                <td>I</td>
                 <td>V</td>
                 <td>C</td>
                 <td>S</td>
                 <td>T</td>
                 <td>P</td>
-                <td>E</td>
+                <td>A</td>
                 <td>H</td>
-                <td>N</td>
+                <td>T</td>
                 <td>W</td>
             </tr>
             <tr>
                 <td>M</td>
                 <td>B</td>
-                <td>F</td>
+                <td>A</td>
                 <td>L</td>
                 <td>R</td>
                 <td>H</td>
                 <td>J</td>
-                <td>Z</td>
+                <td>S</td>
                 <td>D</td>
                 <td>A</td>
-                <td>O</td>
+                <td>Y</td>
                 <td>G</td>
             </tr>
             <tr>
@@ -230,7 +231,7 @@
         </table>
 
         <div>
-            <p>Insira a palavra secreta:</p>
+            <p>Insira as 3 palavras secretas:</p>
             <input type="text" id="secretWord">
             <button onclick="checkWord()">Confirmar</button>
         </div>
@@ -242,7 +243,7 @@
     </div>
 
     <script>
-        const TOKEN = "move";
+        const TOKEN = "move-114";
 
         function validateToken() {
             const userInput = document.getElementById('tokenInput').value;
@@ -258,7 +259,7 @@
         function checkWord() {
             const userInput = document.getElementById('secretWord').value.trim().toLowerCase();
 
-            if (userInput === 'pedalinho') {
+            if (userInput.toUpperCase() === 'boia salva vidas'.toUpperCase()) {
                 document.querySelector('.hint').style.display = 'block';
             } else {
                 alert('Palavra incorreta. Tente novamente.');
