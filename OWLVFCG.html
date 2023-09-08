@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caça-palavras Dica</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+
+
+        .blank {
+            display: inline-block;
+            width: 50px;
+            border-bottom: 2px solid black;
+            margin: 0 5px;
+        }
+
+        .content, .auth {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .content {
+            display: none;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="auth">
+        <p>Insira o token para acessar:</p>
+        <input type="text" id="tokenInput">
+        <button onclick="validateToken()">Acessar</button>
+        <p id="authResult"></p>
+    </div>
+
+    <div class="content">
+        <p>“Porque a
+            <input type="text" class="blank" id="word1">
+            <input type="text" class="blank" id="word2">
+            <input type="text" class="blank" id="word3">
+            é loucura para os que perecem; mas para nós, que somos salvos, é o poder de Deus.”
+        </p>
+        <button onclick="checkAnswer()">Verificar Resposta</button>
+        <p id="result"></p>
+        <p id="result2"></p>
+    </div>
+
+    <script>
+        function transformAndValidate(word, correctWords) {
+            return correctWords.includes(word.trim().toUpperCase());
+        }
+
+        function checkAnswer() {
+            const userWords = [
+                document.getElementById('word1').value,
+                document.getElementById('word2').value,
+                document.getElementById('word3').value
+            ];
+
+            const correctCombinations = [
+                ["PALAVRA", "DA", "CRUZ"],
+                ["PREGAÇÃO", "DA", "CRUZ"],
+                ["PREGACAO", "DA", "CRUZ"],
+                ["PREGACÃO", "DA", "CRUZ"]
+            ];
+
+            const isValid = correctCombinations.some(combination =>
+                combination.every((word, index) => transformAndValidate(userWords[index], [word]))
+            );
+
+            if (isValid) {
+                const token = Math.floor(10000 + Math.random() * 90000);
+                document.getElementById('result').textContent = "Correto! Seu token é: 33447";
+
+                document.getElementById('result2').textContent = "Dica! Cruz";
+            } else {
+                document.getElementById('result').textContent = "Tente novamente.";
+            }
+        }
+
+        const TOKEN = "44558";
+
+    function validateToken() {
+        const userInput = document.getElementById('tokenInput').value;
+
+        if (userInput === TOKEN) {
+            document.querySelector('.auth').style.display = 'none';
+            document.querySelector('.content').style.display = 'block';
+        } else {
+            document.getElementById('authResult').textContent = "Token inválido. Tente novamente.";
+        }
+    }
+
+    </script>
+
+</body>
+
+</html>
