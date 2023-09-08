@@ -1,83 +1,41 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Jogo da Memória</title>
-    <style>
-        .board {
-            display: grid;
-            grid-template-columns: repeat(4, 100px);
-            gap: 10px;
-        }
-
-        .card {
-            width: 100px;
-            height: 100px;
-            background: gray;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2em;
-            cursor: pointer;
-        }
-
-        .revealed, .matched {
-            background: white;
-        }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo do Número Mágico</title>
 </head>
 <body>
-    <div class="board" id="memory-board"></div>
-    <p id="message"></p>
+    <h2>Jogo do Número Mágico</h2>
+    <p>Tente adivinhar o número entre 0 e 1.000.000:</p>
+
+    <input type="number" id="userGuess" min="0" max="1000000">
+    <button onclick="checkGuess()">Adivinhar</button>
+
+    <p id="hint"></p>
 
     <script>
-        const cardsData = ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D'];
-        const board = document.getElementById('memory-board');
-        const message = document.getElementById('message');
-        let revealedCards = [];
-        let matchedPairs = 0;
+        let secretNumber = Math.floor(Math.random() * 1000001);
+        let attempts = 0;
+        console.log(secretNumber);
 
-        function shuffle(array) {
-            array.sort(() => Math.random() - 0.5);
-        }
-
-        function checkMatch() {
-            if (revealedCards.length === 2) {
-                if (revealedCards[0].innerText === revealedCards[1].innerText) {
-                    revealedCards.forEach(card => card.classList.add('matched'));
-                    matchedPairs++;
-                    if (matchedPairs === 4) {
-                        message.textContent = "Você ganhou! A pista é: ESTRELA.";
-                    }
-                } else {
-                    setTimeout(() => {
-                        revealedCards.forEach(card => card.classList.remove('revealed'));
-                    }, 1000);
-                }
-                revealedCards = [];
+        function checkGuess() {
+            const userGuess = parseInt(document.getElementById("userGuess").value);
+            attempts++;
+            
+            if (userGuess === secretNumber) {
+                document.getElementById("hint").innerHTML = `Parabéns! Você acertou em ${attempts} tentativas!
+                | 
+                <br> sua nova pista é: 
+                <br> seu novo token é: xpto
+                `;
+                
+            } else if (userGuess < secretNumber) {
+                document.getElementById("hint").innerText = "O número é maior! Tente novamente.";
+            } else {
+                document.getElementById("hint").innerText = "O número é menor! Tente novamente.";
             }
         }
-
-        function revealCard(event) {
-            if (revealedCards.length < 2 && !event.target.classList.contains('revealed') && !event.target.classList.contains('matched')) {
-                event.target.classList.add('revealed');
-                revealedCards.push(event.target);
-                checkMatch();
-            }
-        }
-
-        function setupGame() {
-            shuffle(cardsData);
-            cardsData.forEach(data => {
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.textContent = data;
-                card.addEventListener('click', revealCard);
-                board.appendChild(card);
-            });
-        }
-
-        setupGame();
     </script>
 </body>
 </html>
