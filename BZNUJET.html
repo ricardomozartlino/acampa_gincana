@@ -12,122 +12,151 @@
             top: 10px;
             right: 10px;
         }
-        
+
         .highlight {
             font-weight: bold;
             font-size: 120%;
+        }
+
+        #celebration {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 2em;
+            text-align: center;
+            padding-top: 20%;
         }
     </style>
 </head>
 
 <body>
 
-<h2 id="gincanaAtual">Gincana Atual: </h2>
-<div id="pontuacaoGincana"></div>
-<canvas id="rankingChart"></canvas>
+    <h2 id="gincanaAtual">Gincana Atual: </h2>
+    <div id="pontuacaoGincana"></div>
+    <canvas id="rankingChart"></canvas>
 
-<!-- Botão para atualizar a pontuação -->
-<button id="updateButton" onclick="updateChart()">Próxima Gincana</button>
+    <!-- Botão para atualizar a pontuação -->
+    <button id="updateButton" onclick="updateChart()">Próxima Gincana</button>
 
-<script>
-    let times = ['Amarelo', 'Verde', 'Vermelho', 'Azul'];
-    let pontos = [-10, 0, 0, 0];
+    <div id="celebration">🎉🥳 O time <span id="championName"></span> é o campeão! 🥳🎉</div>
 
-    const colors = {
-        'Amarelo': {
-            background: 'rgba(255, 223, 0, 0.2)',
-            border: 'rgba(255, 223, 0, 1)',
-            text: 'rgb(255, 223, 0)'
-        },
-        'Verde': {
-            background: 'rgba(0, 128, 0, 0.2)',
-            border: 'rgba(0, 128, 0, 1)',
-            text: 'rgb(0, 128, 0)'
-        },
-        'Vermelho': {
-            background: 'rgba(255, 0, 0, 0.2)',
-            border: 'rgba(255, 0, 0, 1)',
-            text: 'rgb(255, 0, 0)'
-        },
-        'Azul': {
-            background: 'rgba(0, 0, 255, 0.2)',
-            border: 'rgba(0, 0, 255, 1)',
-            text: 'rgb(0, 0, 255)'
-        }
-    };
+    <script>
+        let times = ['Amarelo', 'Verde', 'Vermelho', 'Azul'];
+        let pontos = [-10, 0, 0, 0];
 
-    const pontuacoes = {
-        'Amarelo': [100, 100, 40, 60, 100, 40],
-        'Verde': [80, 60, 80, 40, 60, 60],
-        'Vermelho': [60, 40, 60, 80, 80, 100],
-        'Azul': [40, 80, 100, 100, 40, 80]
-    };
+        const colors = {
+            'Amarelo': {
+                background: 'rgba(255, 223, 0, 0.2)',
+                border: 'rgba(255, 223, 0, 1)',
+                text: 'rgb(255, 223, 0)'
+            },
+            'Verde': {
+                background: 'rgba(0, 128, 0, 0.2)',
+                border: 'rgba(0, 128, 0, 1)',
+                text: 'rgb(0, 128, 0)'
+            },
+            'Vermelho': {
+                background: 'rgba(255, 0, 0, 0.2)',
+                border: 'rgba(255, 0, 0, 1)',
+                text: 'rgb(255, 0, 0)'
+            },
+            'Azul': {
+                background: 'rgba(0, 0, 255, 0.2)',
+                border: 'rgba(0, 0, 255, 1)',
+                text: 'rgb(0, 0, 255)'
+            }
+        };
 
-    const gincanas = ["Bandeira", "Grito de guerra", "Caça ao tesouro", "Circuito", "Canibal", "Perguntas"];
-    let indexPontuacao = 0;
+        const pontuacoes = {
+            'Amarelo': [100, 100, 40, 60, 100, 40],
+            'Verde': [80, 60, 80, 40, 60, 60],
+            'Vermelho': [60, 40, 60, 80, 80, 100],
+            'Azul': [40, 80, 100, 100, 40, 80]
+        };
 
-    let ctx = document.getElementById('rankingChart').getContext('2d');
+        const gincanas = ["Bandeira", "Grito de guerra", "Caça ao tesouro", "Circuito", "Canibal", "Perguntas"];
+        let indexPontuacao = 0;
 
-    let chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: times.slice(),
-            datasets: [{
-                label: 'Pontos',
-                data: pontos.slice(),
-                backgroundColor: times.map(t => colors[t].background),
-                borderColor: times.map(t => colors[t].border),
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        let ctx = document.getElementById('rankingChart').getContext('2d');
+
+        let chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: times.slice(),
+                datasets: [{
+                    label: 'Pontos',
+                    data: pontos.slice(),
+                    backgroundColor: times.map(t => colors[t].background),
+                    borderColor: times.map(t => colors[t].border),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
 
-    function updateChart() {
-        if (indexPontuacao < pontuacoes['Amarelo'].length) {
-            document.getElementById("gincanaAtual").innerText = "Gincana Atual: " + gincanas[indexPontuacao];
-            
-            let results = [];
-            for (let i = 0; i < times.length; i++) {
-                pontos[i] += pontuacoes[times[i]][indexPontuacao];
-                results.push({ team: times[i], score: pontuacoes[times[i]][indexPontuacao], total: pontos[i] });
-            }
+        function updateChart() {
+            if (indexPontuacao < pontuacoes['Amarelo'].length) {
+                document.getElementById("gincanaAtual").innerText = "Gincana Atual: " + gincanas[indexPontuacao];
 
-            // Ordena os resultados com base na pontuação
-            results.sort((a, b) => b.total - a.total);
-            
-            let pontuacaoDiv = document.getElementById("pontuacaoGincana");
-            pontuacaoDiv.innerHTML = "";
-            
-            for (let res of results) {
-                let scoreElem = document.createElement("div");
-                scoreElem.style.color = colors[res.team].text;
-                scoreElem.innerText = res.team + ": " + res.score + " pontos";
-                if (res.score === 100) {
-                    scoreElem.classList.add('highlight');
+                let results = [];
+                for (let i = 0; i < times.length; i++) {
+                    pontos[i] += pontuacoes[times[i]][indexPontuacao];
+                    results.push({ team: times[i], score: pontuacoes[times[i]][indexPontuacao], total: pontos[i] });
                 }
-                pontuacaoDiv.appendChild(scoreElem);
-            }
-            
-            // Reordena os times, pontos e cores
-            for (let i = 0; i < times.length; i++) {
-                chart.data.labels[i] = results[i].team;
-                chart.data.datasets[0].data[i] = results[i].total;
-                chart.data.datasets[0].backgroundColor[i] = colors[results[i].team].background;
-                chart.data.datasets[0].borderColor[i] = colors[results[i].team].border;
-            }
 
-            indexPontuacao++;
-            chart.update();
+                // Ordena os resultados com base na pontuação
+                results.sort((a, b) => b.total - a.total);
+
+                let pontuacaoDiv = document.getElementById("pontuacaoGincana");
+                pontuacaoDiv.innerHTML = "";
+
+                for (let res of results) {
+                    let scoreElem = document.createElement("div");
+                    scoreElem.style.color = colors[res.team].text;
+                    scoreElem.innerText = res.team + ": " + res.score + " pontos";
+                    if (res.score === 100) {
+                        scoreElem.classList.add('highlight');
+                    }
+                    pontuacaoDiv.appendChild(scoreElem);
+                }
+
+                // Reordena os times, pontos e cores
+                for (let i = 0; i < times.length; i++) {
+                    chart.data.labels[i] = results[i].team;
+                    chart.data.datasets[0].data[i] = results[i].total;
+                    chart.data.datasets[0].backgroundColor[i] = colors[results[i].team].background;
+                    chart.data.datasets[0].borderColor[i] = colors[results[i].team].border;
+                }
+
+                indexPontuacao++;
+                chart.update();
+            } else {
+                // Encontrando o campeão após todas as gincanas
+                let maxPoints = Math.max(...pontos);
+                let championIndex = pontos.indexOf(maxPoints);
+                let championName = times[championIndex];
+
+                // Exibindo a comemoração
+                document.getElementById('celebration').style.display = 'block';
+                document.getElementById('championName').innerText = championName;
+                document.getElementById('championName').style.color = colors[championName].text;
+
+                // Desabilitando o botão
+                document.getElementById('updateButton').disabled = true;
+            }
         }
-    }
-</script>
+    </script>
 
 </body>
+
 </html>
